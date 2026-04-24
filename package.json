@@ -1,0 +1,12 @@
+{
+  "name": "skillswap",
+  "version": "1.0.0",
+  "description": "SkillSwap - A platform for skill sharing and learning",
+  "scripts": {
+    "build": "cd client && npm install && npm run build",
+    "dev": "npm run dev --prefix client"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
