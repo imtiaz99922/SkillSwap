@@ -18,6 +18,7 @@ import QuizDetailPage from "./features/quiz/pages/QuizDetailPage";
 import QuizCreatePage from "./features/quiz/pages/QuizCreatePage";
 import CourseDetailPage from "./features/search/pages/CourseDetailPage";
 import PaymentPage from "./features/payment/pages/PaymentPage";
+
 import "./styles/ModernDesign.css";
 
 export default function App() {

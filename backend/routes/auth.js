@@ -5,6 +5,10 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Session = require("../models/Session");
 const auth = require("../middleware/auth");
+// Initialize Stripe only if secret key is provided
+const stripe = process.env.STRIPE_SECRET_KEY
+  ? require("stripe")(process.env.STRIPE_SECRET_KEY)
+  : null;
 
 // POST /api/auth/register
 router.post("/register", async (req, res) => {
@@ -25,14 +29,30 @@ router.post("/register", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash(password, salt);
 
-    const user = new User({ name, email, password: hashed });
+    const user = new User({
+      name,
+      email,
+      password: hashed,
+    });
     await user.save();
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
-    res.json({
-      token,
+    // Create Stripe customer (optional)
+    if (stripe) {
+      try {
+        const stripeCustomer = await stripe.customers.create({
+          email: user.email,
+          name: user.name,
+        });
+        user.stripeCustomerId = stripeCustomer.id;
+        await user.save();
+      } catch (stripeError) {
+        console.error("Error creating Stripe customer:", stripeError);
+        // Continue even if Stripe fails
+      }
+    }
+
+    res.status(201).json({
+      msg: "Registration successful!",
       user: { id: user._id, name: user.name, email: user.email },
     });
   } catch (e) {

@@ -97,6 +97,7 @@ export default function Login() {
         email: emailVal,
         password: passVal,
       });
+
       saveToken(res.data.token);
       localStorage.setItem("userId", res.data.user.id);
       localStorage.setItem("userName", res.data.user.name);

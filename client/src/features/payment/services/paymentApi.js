@@ -6,6 +6,22 @@ export const paymentApi = {
     return Array.isArray(res.data) ? res.data : res.data.packages || [];
   },
 
+  // Stripe: Create payment intent
+  createPaymentIntent: async (packageId) => {
+    const res = await api.post("/payment/create-payment-intent", { packageId });
+    return res.data;
+  },
+
+  // Stripe: Confirm payment
+  confirmPayment: async (paymentIntentId, packageId) => {
+    const res = await api.post("/payment/confirm-payment", {
+      paymentIntentId,
+      packageId,
+    });
+    return res.data;
+  },
+
+  // Legacy: Process payment (without Stripe)
   processPayment: async ({
     packageId,
     amount,

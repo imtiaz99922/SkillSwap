@@ -9,20 +9,40 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    setSuccess("");
     if (!name || !email || !password) return setError("Please fill all fields");
+    if (password.length < 6)
+      return setError("Password must be at least 6 characters");
+
     setLoading(true);
     try {
-      await api.post("/auth/register", { name, email, password });
-      navigate("/login", {
-        state: {
-          successMessage: "Account created successfully. Please sign in.",
-        },
+      const response = await api.post("/auth/register", {
+        name,
+        email,
+        password,
       });
+
+      setSuccess(response.data?.msg || "Account created successfully!");
+
+      // Reset form
+      setName("");
+      setEmail("");
+      setPassword("");
+
+      // Redirect to login after 3 seconds
+      setTimeout(() => {
+        navigate("/login", {
+          state: {
+            successMessage: "Account created! You can now log in.",
+          },
+        });
+      }, 3000);
     } catch (err) {
       setError(err?.response?.data?.msg || "Registration failed");
     } finally {
@@ -45,6 +65,21 @@ export default function Register() {
         {/* Right Section - Form */}
         <div className="login-form-container">
           {error && <div className="error-message">{error}</div>}
+          {success && (
+            <div className="success-message" style={{ marginBottom: "1rem" }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "8px" }}
+              >
+                <span style={{ fontSize: "1.2rem" }}>✓</span>
+                <div>
+                  <strong>Registration Successful!</strong>
+                  <p style={{ fontSize: "0.9rem", marginTop: "4px" }}>
+                    Your account has been created. Redirecting to login...
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -59,6 +94,7 @@ export default function Register() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                disabled={loading}
               />
             </div>
 
@@ -74,6 +110,7 @@ export default function Register() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={loading}
               />
             </div>
 
@@ -89,6 +126,7 @@ export default function Register() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={loading}
               />
             </div>
 
