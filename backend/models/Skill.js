@@ -39,6 +39,35 @@ const SkillSchema = new mongoose.Schema(
         trim: true,
       },
     ],
+    // For "teach" type skills
+    coursePrice: {
+      type: Number,
+      default: null, // in credits, only for teach type
+    },
+    courseDuration: {
+      type: Number,
+      default: null, // in hours, only for teach type
+    },
+    courseCapacity: {
+      type: Number,
+      default: null, // max students
+    },
+    hasDemoQuiz: {
+      type: Boolean,
+      default: false, // only for teach type
+    },
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
+      default: null, // links to actual Course document
+    },
+    // For "learn" type skills
+    interestedInstructors: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     isActive: {
       type: Boolean,
       default: true,

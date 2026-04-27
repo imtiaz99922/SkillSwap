@@ -54,6 +54,11 @@ async function seedDatabase() {
     // Create dummy users
     const users = await User.insertMany([
       {
+        name: "Death Soul",
+        email: "deathsoul241@gmail.com",
+        password: await bcryptjs.hash("123456", 10),
+      },
+      {
         name: "Test User",
         email: "test@skillswap.com",
         password: await bcryptjs.hash("123456", 10),
@@ -90,6 +95,16 @@ async function seedDatabase() {
     const userProfiles = await UserProfile.insertMany([
       {
         userId: users[0]._id,
+        university: "Your University",
+        availability: "Anytime",
+        rating: 5,
+        totalReviews: 0,
+        bio: "Welcome back to SkillSwap!",
+        location: "Your City",
+        profileImage: "https://i.pravatar.cc/150?img=10",
+      },
+      {
+        userId: users[1]._id,
         university: "Test University",
         availability: "Anytime",
         rating: 5,
@@ -99,7 +114,7 @@ async function seedDatabase() {
         profileImage: "https://i.pravatar.cc/150?img=0",
       },
       {
-        userId: users[1]._id,
+        userId: users[2]._id,
         university: "Stanford University",
         availability: "Weekends",
         rating: 4.8,
@@ -109,7 +124,7 @@ async function seedDatabase() {
         profileImage: "https://i.pravatar.cc/150?img=1",
       },
       {
-        userId: users[2]._id,
+        userId: users[3]._id,
         university: "MIT",
         availability: "Weekdays",
         rating: 4.6,
@@ -119,7 +134,7 @@ async function seedDatabase() {
         profileImage: "https://i.pravatar.cc/150?img=2",
       },
       {
-        userId: users[3]._id,
+        userId: users[4]._id,
         university: "UC Berkeley",
         availability: "Anytime",
         rating: 4.9,
@@ -129,7 +144,7 @@ async function seedDatabase() {
         profileImage: "https://i.pravatar.cc/150?img=3",
       },
       {
-        userId: users[4]._id,
+        userId: users[5]._id,
         university: "Harvard University",
         availability: "Weekends",
         rating: 4.7,
@@ -139,7 +154,7 @@ async function seedDatabase() {
         profileImage: "https://i.pravatar.cc/150?img=4",
       },
       {
-        userId: users[5]._id,
+        userId: users[6]._id,
         university: "Carnegie Mellon",
         availability: "Anytime",
         rating: 4.5,
@@ -155,7 +170,7 @@ async function seedDatabase() {
     const skills = await Skill.insertMany([
       // Alice's Teaching Skills
       {
-        userId: users[1]._id,
+        userId: users[2]._id,
         title: "Advanced Python Programming",
         type: "teach",
         level: "advanced",
@@ -165,7 +180,7 @@ async function seedDatabase() {
         tags: ["python", "django", "flask", "backend"],
       },
       {
-        userId: users[1]._id,
+        userId: users[2]._id,
         title: "Python for Beginners",
         type: "teach",
         level: "beginner",
@@ -197,7 +212,7 @@ async function seedDatabase() {
       },
       // Carol's Teaching Skills
       {
-        userId: users[3]._id,
+        userId: users[6]._id,
         title: "Full Stack MERN Development",
         type: "teach",
         level: "advanced",
@@ -207,7 +222,7 @@ async function seedDatabase() {
         tags: ["mern", "react", "nodejs", "mongodb", "full-stack"],
       },
       {
-        userId: users[3]._id,
+        userId: users[6]._id,
         title: "React.js Essentials",
         type: "teach",
         level: "intermediate",
@@ -218,7 +233,7 @@ async function seedDatabase() {
       },
       // David's Teaching Skills
       {
-        userId: users[4]._id,
+        userId: users[6]._id,
         title: "React Native Mobile Apps",
         type: "teach",
         level: "advanced",
@@ -228,7 +243,7 @@ async function seedDatabase() {
         tags: ["react-native", "mobile", "ios", "android"],
       },
       {
-        userId: users[4]._id,
+        userId: users[6]._id,
         title: "JavaScript Fundamentals",
         type: "teach",
         level: "beginner",
@@ -239,7 +254,7 @@ async function seedDatabase() {
       },
       // Emma's Teaching Skills
       {
-        userId: users[5]._id,
+        userId: users[6]._id,
         title: "Kubernetes & Container Orchestration",
         type: "teach",
         level: "advanced",
@@ -249,7 +264,7 @@ async function seedDatabase() {
         tags: ["kubernetes", "docker", "devops", "cloud"],
       },
       {
-        userId: users[5]._id,
+        userId: users[6]._id,
         title: "Docker Basics",
         type: "teach",
         level: "beginner",
@@ -260,7 +275,7 @@ async function seedDatabase() {
       },
       // Learning Skills (to demonstrate skill exchange)
       {
-        userId: users[1]._id,
+        userId: users[2]._id,
         title: "Want to Learn React",
         type: "learn",
         level: "beginner",
@@ -280,7 +295,7 @@ async function seedDatabase() {
         tags: ["web-development", "mentoring", "full-stack"],
       },
       {
-        userId: users[3]._id,
+        userId: users[6]._id,
         title: "Want to Master DevOps",
         type: "learn",
         level: "intermediate",
@@ -290,7 +305,7 @@ async function seedDatabase() {
         tags: ["devops", "kubernetes", "docker"],
       },
       {
-        userId: users[4]._id,
+        userId: users[6]._id,
         title: "Learn Cloud Architecture with AWS",
         type: "learn",
         level: "beginner",
@@ -300,7 +315,7 @@ async function seedDatabase() {
         tags: ["aws", "cloud", "architecture"],
       },
       {
-        userId: users[5]._id,
+        userId: users[6]._id,
         title: "Mobile Development Learning",
         type: "learn",
         level: "beginner",
@@ -1785,7 +1800,7 @@ async function seedDatabase() {
         ],
       },
       {
-        userId: users[1]._id,
+        userId: users[2]._id,
         challengeId: challenges[1]._id,
         skillId: skills[1]._id,
         score: 90,
@@ -1810,7 +1825,7 @@ async function seedDatabase() {
         ],
       },
       {
-        userId: users[3]._id,
+        userId: users[6]._id,
         challengeId: challenges[3]._id,
         skillId: skills[3]._id,
         score: 65,
@@ -1846,7 +1861,7 @@ async function seedDatabase() {
         totalSpent: 500,
       },
       {
-        userId: users[1]._id,
+        userId: users[2]._id,
         credits: 150,
         totalEarned: 200,
         totalSpent: 50,
@@ -1858,19 +1873,19 @@ async function seedDatabase() {
         totalSpent: 80,
       },
       {
-        userId: users[3]._id,
+        userId: users[6]._id,
         credits: 350,
         totalEarned: 500,
         totalSpent: 150,
       },
       {
-        userId: users[4]._id,
+        userId: users[6]._id,
         credits: 50,
         totalEarned: 50,
         totalSpent: 0,
       },
       {
-        userId: users[5]._id,
+        userId: users[6]._id,
         credits: 180,
         totalEarned: 250,
         totalSpent: 70,
@@ -1890,7 +1905,7 @@ async function seedDatabase() {
         currency: "USD",
       },
       {
-        userId: users[1]._id,
+        userId: users[2]._id,
         amount: 9.99,
         creditsGranted: 100,
         paymentMethod: "Credit Card",
@@ -1908,7 +1923,7 @@ async function seedDatabase() {
         currency: "USD",
       },
       {
-        userId: users[3]._id,
+        userId: users[6]._id,
         amount: 4.99,
         creditsGranted: 50,
         paymentMethod: "Apple Pay",
@@ -1917,7 +1932,7 @@ async function seedDatabase() {
         currency: "USD",
       },
       {
-        userId: users[4]._id,
+        userId: users[6]._id,
         amount: 9.99,
         creditsGranted: 100,
         paymentMethod: "Credit Card",
@@ -1926,7 +1941,7 @@ async function seedDatabase() {
         currency: "USD",
       },
       {
-        userId: users[5]._id,
+        userId: users[6]._id,
         amount: 29.99,
         creditsGranted: 350,
         paymentMethod: "Google Pay",
@@ -1948,7 +1963,7 @@ async function seedDatabase() {
         status: "Completed",
       },
       {
-        userId: users[1]._id,
+        userId: users[2]._id,
         type: "EARN",
         amount: 20,
         reason: "Challenge",
@@ -1972,7 +1987,7 @@ async function seedDatabase() {
         status: "Completed",
       },
       {
-        userId: users[1]._id,
+        userId: users[2]._id,
         type: "EARN",
         amount: 100,
         reason: "Teaching",
@@ -1989,7 +2004,7 @@ async function seedDatabase() {
         status: "Completed",
       },
       {
-        userId: users[3]._id,
+        userId: users[6]._id,
         type: "EARN",
         amount: 15,
         reason: "Bonus",
@@ -1997,7 +2012,7 @@ async function seedDatabase() {
         status: "Completed",
       },
       {
-        userId: users[4]._id,
+        userId: users[6]._id,
         type: "EARN",
         amount: 50,
         reason: "Teaching",
@@ -2035,7 +2050,7 @@ async function seedDatabase() {
 
       for (const slot of selectedSlots) {
         aliceAvailability.push({
-          userId: users[1]._id,
+          userId: users[2]._id,
           date: slotDate,
           startTime: slot.start,
           endTime: slot.end,
@@ -2052,9 +2067,9 @@ async function seedDatabase() {
     // Create availability slots for other teachers (Bob, Carol, David, Emma)
     const otherTeachers = [
       { userId: users[2]._id, name: "Bob Smith" },
-      { userId: users[3]._id, name: "Carol White" },
-      { userId: users[4]._id, name: "David Brown" },
-      { userId: users[5]._id, name: "Emma Davis" },
+      { userId: users[6]._id, name: "Carol White" },
+      { userId: users[6]._id, name: "David Brown" },
+      { userId: users[6]._id, name: "Emma Davis" },
     ];
 
     let totalOtherSlots = 0;

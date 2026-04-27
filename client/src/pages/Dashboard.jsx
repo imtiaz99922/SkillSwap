@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
+import {
+  FaUserCircle,
+  FaTrophy,
+  FaFire,
+  FaCalendarAlt,
+  FaClock,
+} from "react-icons/fa";
 import "./Dashboard.css";
 
 export default function Dashboard() {
@@ -8,7 +15,6 @@ export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [analytics, setAnalytics] = useState(null);
-  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     let mounted = true;

@@ -61,6 +61,9 @@ export default function Navbar() {
               <Link to="/search" className="nav-link">
                 🔍 Find Partners
               </Link>
+              <Link to="/courses" className="nav-link">
+                📚 Browse Courses
+              </Link>
               <Link to="/payment" className="nav-link">
                 💳 Wallet
               </Link>
@@ -75,6 +78,27 @@ export default function Navbar() {
               </Link>
               <Link to="/notifications" className="nav-link">
                 🔔 Notifications
+              </Link>
+              <Link to="/recommendations" className="nav-link">
+                ⭐ Recommendations
+              </Link>
+              <Link to="/mentorship" className="nav-link">
+                👨‍🏫 Mentorship
+              </Link>
+              <Link to="/referral" className="nav-link">
+                🤝 Referral
+              </Link>
+              <Link to="/leaderboard" className="nav-link">
+                🏆 Leaderboard
+              </Link>
+              <Link to="/sessions" className="nav-link">
+                📝 Sessions
+              </Link>
+              <Link to="/reports" className="nav-link">
+                ⚠️ Reports
+              </Link>
+              <Link to="/pdf-reports" className="nav-link">
+                📄 Downloads
               </Link>
               <button type="button" onClick={toggleTheme} className="nav-link">
                 {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
@@ -131,6 +155,13 @@ export default function Navbar() {
                 🔍 Find Partners
               </Link>
               <Link
+                to="/courses"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-nav-link"
+              >
+                📚 Browse Courses
+              </Link>
+              <Link
                 to="/payment"
                 onClick={() => setMobileMenuOpen(false)}
                 className="mobile-nav-link"
@@ -164,6 +195,55 @@ export default function Navbar() {
                 className="mobile-nav-link"
               >
                 🔔 Notifications
+              </Link>
+              <Link
+                to="/recommendations"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-nav-link"
+              >
+                ⭐ Recommendations
+              </Link>
+              <Link
+                to="/mentorship"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-nav-link"
+              >
+                👨‍🏫 Mentorship
+              </Link>
+              <Link
+                to="/referral"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-nav-link"
+              >
+                🤝 Referral
+              </Link>
+              <Link
+                to="/leaderboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-nav-link"
+              >
+                🏆 Leaderboard
+              </Link>
+              <Link
+                to="/sessions"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-nav-link"
+              >
+                📝 Sessions
+              </Link>
+              <Link
+                to="/reports"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-nav-link"
+              >
+                ⚠️ Reports
+              </Link>
+              <Link
+                to="/pdf-reports"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-nav-link"
+              >
+                📄 Downloads
               </Link>
               <button
                 type="button"

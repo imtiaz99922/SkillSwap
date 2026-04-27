@@ -51,6 +51,15 @@ const availabilityRoutes = require("./routes/availability/availabilityRoutes");
 const chatRoutes = require("./routes/chat/chatRoutes");
 const notificationRoutes = require("./routes/notifications/notificationRoutes");
 const reviewRoutes = require("./routes/reviews/reviewRoutes");
+const recommendationRoutes = require("./routes/recommendations");
+const mentorshipRoutes = require("./routes/mentorship");
+const referralRoutes = require("./routes/referral");
+const reportRoutes = require("./routes/reports");
+const leaderboardRoutes = require("./routes/leaderboard");
+const sessionRoutes = require("./routes/sessions");
+const pdfReportRoutes = require("./routes/pdf-reports");
+const courseRoutes = require("./routes/courses");
+const courseContentRoutes = require("./routes/course-content");
 
 // Use routes
 app.use("/api/auth", authRoutes);
@@ -64,6 +73,15 @@ app.use("/api/availability", availabilityRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/recommendations", recommendationRoutes);
+app.use("/api/mentorship", mentorshipRoutes);
+app.use("/api/referral", referralRoutes);
+app.use("/api/reports", reportRoutes);
+app.use("/api/leaderboard", leaderboardRoutes);
+app.use("/api/sessions", sessionRoutes);
+app.use("/api/pdf-reports", pdfReportRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/course-content", courseContentRoutes);
 
 // Health check
 app.get("/health", (req, res) => {
@@ -116,13 +134,15 @@ connectDB()
       console.log(`🚀 Server running on port ${PORT}`);
     });
 
-    // Socket.IO setup
+    // Socket.IO setup with proper CORS
     const io = socketIo(server, {
       cors: {
         origin: allowedOrigins,
         methods: ["GET", "POST"],
         credentials: true,
+        allowedHeaders: ["Content-Type", "Authorization"],
       },
+      transports: ["websocket", "polling"],
     });
 
     app.locals.io = io;

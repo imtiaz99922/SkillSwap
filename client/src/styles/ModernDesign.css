@@ -33,6 +33,77 @@
   --font-body: "DM Sans", sans-serif;
 }
 
+html.dark {
+  --bg: #0f0f11;
+  --surface: #1a1a1f;
+  --surface2: #222228;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-md: rgba(255, 255, 255, 0.12);
+  --text-primary: #f5f4f0;
+  --text-secondary: #9b9a96;
+  --text-muted: #5e5d5a;
+  --indigo-light: #312e81;
+  --sky-light: #082f49;
+  --emerald-light: #065f46;
+  --amber-light: #78350f;
+  --coral-light: #7c2d12;
+}
+
+/* ── APP LAYOUT ── */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  display: contents;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  background: var(--bg);
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+}
+
+.app-main.with-sidebar {
+  margin-left: 260px;
+}
+
+@media (max-width: 1024px) {
+  .app-main.with-sidebar {
+    margin-left: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-main.with-sidebar {
+    margin-left: 0;
+  }
+}
+
 /* ── ANIMATIONS ── */
 @keyframes fadeSlideDown {
   from {
