@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { removeToken, isAuthenticated } from "../utils/auth";
+import { getSocket, initializeSocket } from "../services/socketService";
 import {
   FaBars,
   FaTimes,
@@ -25,11 +26,73 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  // Listen for new notifications
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      initializeSocket(token);
+      const socket = getSocket();
+
+      if (socket) {
+        socket.on("newNotification", (notification) => {
+          if (!notification.readAt) {
+            setUnreadNotifications((prev) => prev + 1);
+          }
+        });
+
+        // Fetch initial unread count
+        fetchUnreadCount();
+      }
+    }
+
+    // Listen for notification read events
+    const handleNotificationRead = () => {
+      setUnreadNotifications((prev) => Math.max(0, prev - 1));
+    };
+
+    const handleAllNotificationsRead = () => {
+      setUnreadNotifications(0);
+    };
+
+    window.addEventListener("notificationRead", handleNotificationRead);
+    window.addEventListener("allNotificationsRead", handleAllNotificationsRead);
+
+    return () => {
+      const socket = getSocket();
+      if (socket) {
+        socket.off("newNotification");
+      }
+      window.removeEventListener("notificationRead", handleNotificationRead);
+      window.removeEventListener(
+        "allNotificationsRead",
+        handleAllNotificationsRead,
+      );
+    };
+  }, []);
+
+  const fetchUnreadCount = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const response = await fetch("/api/notifications/unread-count", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setUnreadNotifications(data.count || 0);
+    } catch (err) {
+      console.error("Failed to fetch unread count:", err);
+    }
+  };
 
   function handleLogout() {
     removeToken();
@@ -76,8 +139,33 @@ export default function Navbar() {
               <Link to="/availability" className="nav-link">
                 📅 Availability
               </Link>
-              <Link to="/notifications" className="nav-link">
+              <Link
+                to="/notifications"
+                className="nav-link"
+                style={{ position: "relative" }}
+              >
                 🔔 Notifications
+                {unreadNotifications > 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-5px",
+                      right: "-5px",
+                      backgroundColor: "#ef4444",
+                      color: "white",
+                      borderRadius: "50%",
+                      width: "20px",
+                      height: "20px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {unreadNotifications > 99 ? "99+" : unreadNotifications}
+                  </span>
+                )}
               </Link>
               <Link to="/recommendations" className="nav-link">
                 ⭐ Recommendations
@@ -193,8 +281,30 @@ export default function Navbar() {
                 to="/notifications"
                 onClick={() => setMobileMenuOpen(false)}
                 className="mobile-nav-link"
+                style={{ position: "relative" }}
               >
                 🔔 Notifications
+                {unreadNotifications > 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-8px",
+                      right: "-8px",
+                      backgroundColor: "#ef4444",
+                      color: "white",
+                      borderRadius: "50%",
+                      width: "18px",
+                      height: "18px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "11px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {unreadNotifications > 99 ? "99+" : unreadNotifications}
+                  </span>
+                )}
               </Link>
               <Link
                 to="/recommendations"

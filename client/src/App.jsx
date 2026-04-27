@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Sidebar from "./components/Sidebar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { initializeSocket, getSocket } from "./services/socketService";
 
 // Feature Pages
 import ChatPage from "./features/chat/pages/ChatPage";
@@ -56,6 +57,34 @@ export default function App() {
     const stored = localStorage.getItem("theme") || "light";
     setTheme(stored);
     document.documentElement.classList.toggle("dark", stored === "dark");
+  }, []);
+
+  // Initialize socket connection on app load
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    if (token && userId) {
+      const socket = initializeSocket(token);
+
+      if (socket) {
+        socket.on("connect", () => {
+          console.log("App: Socket connected");
+        });
+
+        socket.on("receiveMessage", (message) => {
+          console.log("App: New message received", message);
+        });
+
+        socket.on("newNotification", (notification) => {
+          console.log("App: New notification received", notification);
+        });
+      }
+    }
+
+    return () => {
+      // Keep socket connection alive for entire app session
+    };
   }, []);
 
   return (

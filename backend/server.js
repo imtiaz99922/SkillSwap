@@ -170,6 +170,7 @@ connectDB()
 
       socket.on("join", (userId) => {
         socket.join(userId);
+        console.log(`User ${userId} joined room`);
       });
 
       socket.on("sendMessage", async (data) => {
@@ -182,10 +183,22 @@ connectDB()
             timestamp: new Date(),
           });
           await msg.save();
-          io.to(data.receiverId).emit("receiveMessage", msg);
+
+          // Emit to receiver's room
+          io.to(data.receiverId.toString()).emit("receiveMessage", {
+            _id: msg._id,
+            senderId: data.senderId,
+            receiverId: data.receiverId,
+            message: data.message,
+            timestamp: msg.timestamp,
+            isRead: false,
+          });
+
+          // Confirm to sender
           socket.emit("messageSent", msg);
         } catch (err) {
           console.error("Message error:", err);
+          socket.emit("messageError", { error: err.message });
         }
       });
 

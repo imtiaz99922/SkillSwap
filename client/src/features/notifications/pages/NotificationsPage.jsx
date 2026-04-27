@@ -49,6 +49,8 @@ export default function NotificationsPage() {
     try {
       await notificationApi.markAsRead(notificationId);
       fetchNotifications();
+      // Reduce unread count in UI if needed
+      window.dispatchEvent(new CustomEvent("notificationRead"));
     } catch (err) {
       console.error("Failed to mark as read:", err);
     }
@@ -58,6 +60,8 @@ export default function NotificationsPage() {
     try {
       await notificationApi.markAllAsRead();
       fetchNotifications();
+      // Reset unread count
+      window.dispatchEvent(new CustomEvent("allNotificationsRead"));
     } catch (err) {
       console.error("Failed to mark all as read:", err);
     }

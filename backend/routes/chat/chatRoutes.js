@@ -148,13 +148,14 @@ router.post("/send", auth, async (req, res) => {
           body: message.substring(0, 50) + (message.length > 50 ? "..." : ""),
           type: "message",
           data: { senderId: req.userId, senderName: sender.name },
+          sentAt: new Date(),
         });
         await receiverNotification.save();
 
         // Emit socket events
         if (io) {
           // Emit message to receiver
-          io.to(receiverId).emit("receiveMessage", {
+          io.to(receiverId.toString()).emit("receiveMessage", {
             _id: chatMessage._id,
             senderId: req.userId,
             senderName: sender.name,
@@ -165,18 +166,19 @@ router.post("/send", auth, async (req, res) => {
           });
 
           // Emit notification to receiver
-          io.to(receiverId).emit("newNotification", {
+          io.to(receiverId.toString()).emit("newNotification", {
             _id: receiverNotification._id,
             userId: receiverId,
             title: receiverNotification.title,
             body: receiverNotification.body,
             type: "message",
             data: receiverNotification.data,
-            isRead: false,
+            sentAt: receiverNotification.sentAt,
+            readAt: null,
           });
 
           // Emit conversation updated to receiver (so they see this user in their chat list)
-          io.to(receiverId).emit("conversationUpdated", {
+          io.to(receiverId.toString()).emit("conversationUpdated", {
             userId: req.userId,
             userName: sender.name,
             lastMessage: message,
@@ -192,19 +194,21 @@ router.post("/send", auth, async (req, res) => {
           body: message.substring(0, 50) + (message.length > 50 ? "..." : ""),
           type: "message_sent",
           data: { receiverId, receiverName: receiver.name },
+          sentAt: new Date(),
         });
         await senderNotification.save();
 
         // Emit notification to sender
         if (io) {
-          io.to(req.userId).emit("newNotification", {
+          io.to(req.userId.toString()).emit("newNotification", {
             _id: senderNotification._id,
             userId: req.userId,
             title: senderNotification.title,
             body: senderNotification.body,
             type: "message_sent",
             data: senderNotification.data,
-            isRead: false,
+            sentAt: senderNotification.sentAt,
+            readAt: null,
           });
         }
       }
