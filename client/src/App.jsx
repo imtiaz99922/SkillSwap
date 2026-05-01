@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import EmailVerificationPage from "./pages/EmailVerificationPage";
 import Dashboard from "./pages/Dashboard";
 import Sidebar from "./components/Sidebar";
+import FuturisticNavbar from "./components/FuturisticNavbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { initializeSocket, getSocket } from "./services/socketService";
+import "./components/FuturisticStyles.css";
 
 // Feature Pages
 import ChatPage from "./features/chat/pages/ChatPage";
@@ -14,12 +17,13 @@ import ReviewsPage from "./features/reviews/pages/ReviewsPage";
 import AvailabilityPage from "./features/availability/pages/AvailabilityPage";
 import NotificationsPage from "./features/notifications/pages/NotificationsPage";
 import SkillsPage from "./features/skills/pages/SkillsPage";
+import CourseCreatePage from "./features/courses/pages/CourseCreatePage";
 import QuizListPage from "./features/quiz/pages/QuizListPage";
 import QuizDetailPage from "./features/quiz/pages/QuizDetailPage";
 import QuizCreatePage from "./features/quiz/pages/QuizCreatePage";
 import CourseDetailPage from "./features/search/pages/CourseDetailPage";
-import PaymentPage from "./features/payment/pages/PaymentPage";
 import WalletPage from "./pages/WalletPage";
+import SSLCommerzPaymentPage from "./pages/SSLCommerzPaymentPage";
 
 // Course Marketplace Pages
 import CoursesPage from "./pages/CoursesPage";
@@ -41,8 +45,9 @@ import "./styles/ModernDesign.css";
 export default function App() {
   const location = useLocation();
   const [theme, setTheme] = useState("light");
-  const hideLayoutRoutes = ["/login", "/register"];
+  const hideLayoutRoutes = ["/login", "/register", "/verify-email"];
   const showSidebar = !hideLayoutRoutes.includes(location.pathname);
+  const showNavbar = !hideLayoutRoutes.includes(location.pathname);
 
   const toggleTheme = () => {
     setTheme((prev) => {
@@ -89,12 +94,17 @@ export default function App() {
 
   return (
     <div className="app-container">
+      {showNavbar && <FuturisticNavbar />}
       {showSidebar && <Sidebar theme={theme} toggleTheme={toggleTheme} />}
-      <main className={`app-main ${showSidebar ? "with-sidebar" : ""}`}>
+      <main
+        className={`app-main ${showSidebar ? "with-sidebar" : ""}`}
+        style={{ paddingTop: showNavbar ? "96px" : "0" }}
+      >
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verify-email" element={<EmailVerificationPage />} />
           <Route
             path="/dashboard"
             element={
@@ -145,18 +155,18 @@ export default function App() {
             }
           />
           <Route
-            path="/payment"
-            element={
-              <ProtectedRoute>
-                <PaymentPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/wallet"
             element={
               <ProtectedRoute>
                 <WalletPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/buy-credits"
+            element={
+              <ProtectedRoute>
+                <SSLCommerzPaymentPage />
               </ProtectedRoute>
             }
           />
@@ -189,6 +199,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <SkillsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/courses/create"
+            element={
+              <ProtectedRoute>
+                <CourseCreatePage />
               </ProtectedRoute>
             }
           />

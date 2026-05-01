@@ -1,7 +1,7 @@
 .course-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 2rem;
+  background: transparent;
 }
 
 /* Loading & Error */
@@ -109,24 +109,29 @@
 
 /* Course Main Content */
 .course-main {
-  background: white;
-  border-radius: 12px;
+  background: rgba(8, 17, 34, 0.95);
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(34, 211, 238, 0.16);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.26);
 }
 
 .course-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(34, 211, 238, 0.95) 0%,
+    rgba(124, 58, 237, 0.95) 100%
+  );
   padding: 2rem;
   color: white;
 }
 
 .course-hero {
   margin-bottom: 2rem;
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
   height: 300px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .hero-image {
@@ -218,15 +223,20 @@
 /* Course Sections */
 .course-sections {
   padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .course-section {
   margin-bottom: 2.5rem;
+  border-radius: 16px;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .course-section h2 {
   font-size: 1.5rem;
-  color: #333;
+  color: #eff6ff;
   margin-bottom: 1rem;
   font-weight: 700;
 }
@@ -238,9 +248,9 @@
 
 .learning-objectives li {
   padding: 0.75rem 0;
-  color: #555;
+  color: #cbd5e1;
   line-height: 1.6;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
   display: flex;
   align-items: center;
 }
@@ -267,13 +277,13 @@
 
 .tag {
   display: inline-block;
-  background: #f0f0f0;
-  color: #667eea;
+  background: rgba(34, 211, 238, 0.08);
+  color: #93c5fd;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 600;
-  border: 2px solid #667eea;
+  border: 1px solid rgba(34, 211, 238, 0.24);
 }
 
 .demo-section {
@@ -318,10 +328,11 @@
 
 .enrollment-card,
 .purchase-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(15, 23, 42, 0.96);
+  border-radius: 20px;
+  padding: 1.75rem;
+  border: 1px solid rgba(34, 211, 238, 0.16);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
 }
 
 .enrolled-badge {
@@ -516,10 +527,11 @@
 
 /* Payment Info */
 .payment-info {
-  background: #f8f9fa;
+  background: rgba(255, 255, 255, 0.05);
   padding: 1rem;
-  border-radius: 6px;
+  border-radius: 12px;
   margin-bottom: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .payment-info p {

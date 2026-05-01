@@ -161,7 +161,7 @@ const CourseMaterialsPage = () => {
   }
 
   return (
-    <div className="course-materials-page">
+    <div className="course-materials-page feature-page">
       <div className="materials-container">
         {/* Sidebar - Content List */}
         <div className="materials-sidebar">

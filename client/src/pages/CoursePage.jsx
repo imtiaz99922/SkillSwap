@@ -181,7 +181,7 @@ const CoursePage = () => {
   const isEnrolled = enrollmentStatus?.status === "active";
 
   return (
-    <div className="course-page">
+    <div className="course-page feature-page">
       {/* Purchase Status Alert */}
       {purchaseStatus && (
         <div className={`purchase-alert ${purchaseStatus.type}`}>
@@ -232,6 +232,12 @@ const CoursePage = () => {
                   <span className="label">Category</span>
                   <span className="value">{course.category || "N/A"}</span>
                 </div>
+                {course.courseCode && (
+                  <div className="meta-item">
+                    <span className="label">Course ID</span>
+                    <span className="value">{course.courseCode}</span>
+                  </div>
+                )}
                 <div className="meta-item">
                   <span className="label">Duration</span>
                   <span className="value">{course.duration || 0} hours</span>
@@ -320,6 +326,30 @@ const CoursePage = () => {
                 </button>
               </div>
             )}
+
+            {course.resources && course.resources.length > 0 && (
+              <div className="course-section">
+                <h2>📎 Course Resources</h2>
+                <div className="resources-list">
+                  {course.resources.map((resource, index) => (
+                    <a
+                      key={`${resource.url}-${index}`}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="resource-card"
+                    >
+                      <div className="resource-label">
+                        {resource.type === "pdf" && "📄 PDF Resource"}
+                        {resource.type === "youtube" && "▶️ YouTube Link"}
+                        {resource.type === "link" && "🔗 External Link"}
+                      </div>
+                      <div className="resource-title">{resource.title}</div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -345,6 +375,14 @@ const CoursePage = () => {
                 }}
               >
                 Book a Mentor →
+              </button>
+              <button
+                className="access-btn tertiary"
+                onClick={() =>
+                  navigate(`/recommendations?courseId=${courseId}`)
+                }
+              >
+                Recommend this Course
               </button>
             </div>
           ) : (
@@ -403,6 +441,14 @@ const CoursePage = () => {
                 disabled={purchasing}
               >
                 {purchasing ? "Processing..." : `Buy Now - ₳${finalPrice}`}
+              </button>
+              <button
+                className="recommend-btn secondary"
+                onClick={() =>
+                  navigate(`/recommendations?courseId=${courseId}`)
+                }
+              >
+                Recommend this Course
               </button>
 
               {/* Payment Info */}

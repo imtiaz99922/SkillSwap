@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
-import "./Login.css";
+import AuthLayout from "../components/AuthLayout";
+import AuthInput from "../components/AuthInput";
+import AuthActions from "../components/AuthActions";
+import "../components/FuturisticStyles.css";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -51,100 +54,70 @@ export default function Register() {
   }
 
   return (
-    <div className="login-page-new">
-      <div className="login-container-new">
-        {/* Left Section */}
-        <div className="login-left">
-          <div className="logo-brand">SkillSwap</div>
-          <h1 className="login-title">Create Account</h1>
-          <p className="login-subtitle">
-            Join thousands learning and sharing skills today
-          </p>
-        </div>
-
-        {/* Right Section - Form */}
-        <div className="login-form-container">
-          {error && <div className="error-message">{error}</div>}
-          {success && (
-            <div className="success-message" style={{ marginBottom: "1rem" }}>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
-              >
-                <span style={{ fontSize: "1.2rem" }}>✓</span>
-                <div>
-                  <strong>Registration Successful!</strong>
-                  <p style={{ fontSize: "0.9rem", marginTop: "4px" }}>
-                    Your account has been created. Redirecting to login...
-                  </p>
-                </div>
-              </div>
+    <AuthLayout
+      pageTitle="Create Account"
+      pageSubtitle="Join thousands learning and sharing skills today. Build your profile and start connecting with learners, mentors, and collaborators."
+      featureBlocks={[
+        { label: "Trusted platform", value: "SkillSwap community" },
+        { label: "Fast onboarding", value: "Secure signup" },
+      ]}
+      panelLabel="Register"
+      panelHeading="Create your account"
+      panelBadge="SkillSwap sign-up"
+    >
+      {error && <div className="error-message">{error}</div>}
+      {success && (
+        <div className="success-message" style={{ marginBottom: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <span style={{ fontSize: "1.2rem" }}>✓</span>
+            <div>
+              <strong>Registration Successful!</strong>
+              <p style={{ fontSize: "0.9rem", marginTop: "4px" }}>
+                Your account has been created. Redirecting to login...
+              </p>
             </div>
-          )}
-
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name" className="form-label">
-                Full Name
-              </label>
-              <input
-                id="name"
-                type="text"
-                placeholder="Enter your full name"
-                className="form-input"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                disabled={loading}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                className="form-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                placeholder="Create a password"
-                className="form-input"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={loading}
-              />
-            </div>
-
-            <button type="submit" className="login-button" disabled={loading}>
-              {loading ? "Creating Account..." : "Create Account"}
-            </button>
-          </form>
-
-          <div className="login-footer">
-            <p>
-              Already have an account?{" "}
-              <Link to="/login" className="signup-link">
-                Sign in here
-              </Link>
-            </p>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <AuthInput
+          id="name"
+          label="Full Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          disabled={loading}
+        />
+
+        <AuthInput
+          id="email"
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          disabled={loading}
+        />
+
+        <AuthInput
+          id="password"
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          disabled={loading}
+        />
+
+        <AuthActions
+          primaryLabel={loading ? "Creating Account..." : "Create Account"}
+          disabled={loading}
+          footerText="Already have an account?"
+          footerLinkText="Sign in here"
+          footerLinkTo="/login"
+        />
+      </form>
+    </AuthLayout>
   );
 }

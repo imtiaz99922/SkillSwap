@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
 require("dotenv").config();
 
+const generateReferralCode = (seed) => {
+  return `${seed}-${Math.floor(1000 + Math.random() * 9000)}`;
+};
+
 // Import all models
 const User = require("./models/User");
 const UserProfile = require("./models/UserProfile");
@@ -57,36 +61,50 @@ async function seedDatabase() {
         name: "Death Soul",
         email: "deathsoul241@gmail.com",
         password: await bcryptjs.hash("123456", 10),
+        isEmailVerified: true,
+        referralCode: generateReferralCode("DS"),
       },
       {
         name: "Test User",
         email: "test@skillswap.com",
         password: await bcryptjs.hash("123456", 10),
+        isEmailVerified: true,
+        referralCode: generateReferralCode("TU"),
       },
       {
         name: "Alice Johnson",
         email: "alice@example.com",
         password: await bcryptjs.hash("password123", 10),
+        isEmailVerified: true,
+        referralCode: generateReferralCode("AJ"),
       },
       {
         name: "Bob Smith",
         email: "bob@example.com",
         password: await bcryptjs.hash("password123", 10),
+        isEmailVerified: true,
+        referralCode: generateReferralCode("BS"),
       },
       {
         name: "Carol White",
         email: "carol@example.com",
         password: await bcryptjs.hash("password123", 10),
+        isEmailVerified: true,
+        referralCode: generateReferralCode("CW"),
       },
       {
         name: "David Brown",
         email: "david@example.com",
         password: await bcryptjs.hash("password123", 10),
+        isEmailVerified: true,
+        referralCode: generateReferralCode("DB"),
       },
       {
         name: "Emma Davis",
         email: "emma@example.com",
         password: await bcryptjs.hash("password123", 10),
+        isEmailVerified: true,
+        referralCode: generateReferralCode("ED"),
       },
     ]);
     console.log(`Created ${users.length} users`);
@@ -1836,22 +1854,7 @@ async function seedDatabase() {
     ]);
     console.log(`Created ${attempts.length} challenge attempts`);
 
-    // generate some login sessions for the first user (for analytics)
-    {
-      const Session = require("./models/Session");
-      const now = Date.now();
-      const sessionDocs = [];
-      for (let i = 0; i < 20; i++) {
-        const offset = Math.floor(Math.random() * 30 * 24 * 60 * 60 * 1000);
-        sessionDocs.push({
-          userId: users[0]._id,
-          createdAt: new Date(now - offset),
-        });
-      }
-      await Session.insertMany(sessionDocs);
-      console.log(`Created ${sessionDocs.length} sessions for analytics`);
-    }
-
+    // NOTE: login session analytics are not seeded here because the current Session model is used for mentorship sessions.
     // Create wallets
     const wallets = await Wallet.insertMany([
       {
@@ -1861,28 +1864,34 @@ async function seedDatabase() {
         totalSpent: 500,
       },
       {
+        userId: users[1]._id,
+        credits: 100,
+        totalEarned: 150,
+        totalSpent: 50,
+      },
+      {
         userId: users[2]._id,
         credits: 150,
         totalEarned: 200,
         totalSpent: 50,
       },
       {
-        userId: users[2]._id,
-        credits: 220,
+        userId: users[3]._id,
+        credits: 80,
+        totalEarned: 120,
+        totalSpent: 40,
+      },
+      {
+        userId: users[4]._id,
+        credits: 240,
         totalEarned: 300,
-        totalSpent: 80,
+        totalSpent: 60,
       },
       {
-        userId: users[6]._id,
-        credits: 350,
-        totalEarned: 500,
-        totalSpent: 150,
-      },
-      {
-        userId: users[6]._id,
-        credits: 50,
-        totalEarned: 50,
-        totalSpent: 0,
+        userId: users[5]._id,
+        credits: 60,
+        totalEarned: 90,
+        totalSpent: 30,
       },
       {
         userId: users[6]._id,
@@ -1897,56 +1906,68 @@ async function seedDatabase() {
     const payments = await Payment.insertMany([
       {
         userId: users[0]._id,
+        packageId: "enterprise",
         amount: 49.99,
         creditsGranted: 500,
         paymentMethod: "Credit Card",
-        status: "Completed",
+        status: "success",
         transactionId: "PT_" + Date.now() + "_0",
+        invoiceId: "INV_" + Date.now() + "_0",
         currency: "USD",
       },
       {
         userId: users[2]._id,
+        packageId: "starter",
         amount: 9.99,
         creditsGranted: 100,
         paymentMethod: "Credit Card",
-        status: "Completed",
+        status: "success",
         transactionId: "PT_" + Date.now() + "_1",
+        invoiceId: "INV_" + Date.now() + "_1",
         currency: "USD",
       },
       {
         userId: users[2]._id,
+        packageId: "business",
         amount: 19.99,
         creditsGranted: 250,
         paymentMethod: "PayPal",
-        status: "Completed",
+        status: "success",
         transactionId: "PT_" + Date.now() + "_2",
+        invoiceId: "INV_" + Date.now() + "_2",
         currency: "USD",
       },
       {
         userId: users[6]._id,
+        packageId: "starter",
         amount: 4.99,
         creditsGranted: 50,
         paymentMethod: "Apple Pay",
-        status: "Completed",
+        status: "success",
         transactionId: "PT_" + Date.now() + "_3",
+        invoiceId: "INV_" + Date.now() + "_3",
         currency: "USD",
       },
       {
         userId: users[6]._id,
+        packageId: "starter",
         amount: 9.99,
         creditsGranted: 100,
         paymentMethod: "Credit Card",
-        status: "Pending",
+        status: "pending",
         transactionId: "PT_" + Date.now() + "_4",
+        invoiceId: "INV_" + Date.now() + "_4",
         currency: "USD",
       },
       {
         userId: users[6]._id,
+        packageId: "pro",
         amount: 29.99,
         creditsGranted: 350,
         paymentMethod: "Google Pay",
-        status: "Completed",
+        status: "success",
         transactionId: "PT_" + Date.now() + "_5",
+        invoiceId: "INV_" + Date.now() + "_5",
         currency: "USD",
       },
     ]);

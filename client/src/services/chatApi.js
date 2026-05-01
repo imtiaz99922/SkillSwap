@@ -13,6 +13,32 @@ export const chatApi = {
     return res.data;
   },
 
+  // Get global messages
+  getGlobalMessages: async (page = 1, limit = 50) => {
+    const res = await api.get(`/chat/global`, {
+      params: { page, limit },
+    });
+    return res.data;
+  },
+
+  // Post a global message
+  postGlobalMessage: async (message) => {
+    const res = await api.post(`/chat/global`, { message });
+    return res.data;
+  },
+
+  // Delete a global message
+  deleteGlobalMessage: async (messageId) => {
+    const res = await api.delete(`/chat/global/${messageId}`);
+    return res.data;
+  },
+
+  // Like a global message
+  likeGlobalMessage: async (messageId) => {
+    const res = await api.post(`/chat/global/${messageId}/like`);
+    return res.data;
+  },
+
   // Send a message via HTTP (Socket.io handles real-time)
   sendMessage: async (receiverId, message) => {
     const res = await api.post(`/chat/send`, { receiverId, message });

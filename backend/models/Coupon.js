@@ -32,6 +32,11 @@ const CouponSchema = new mongoose.Schema(
       ref: "User",
       default: null, // null for system coupons, referrer ID for referral codes
     },
+    referredToUserId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null, // For course referral coupons - only this user can use it
+    },
     validFrom: {
       type: Date,
       required: true,

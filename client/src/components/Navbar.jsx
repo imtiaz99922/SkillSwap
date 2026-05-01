@@ -125,7 +125,7 @@ export default function Navbar() {
                 🔍 Find Partners
               </Link>
               <Link to="/courses" className="nav-link">
-                📚 Browse Courses
+                📚 My Courses
               </Link>
               <Link to="/payment" className="nav-link">
                 💳 Wallet

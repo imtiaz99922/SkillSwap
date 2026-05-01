@@ -10,12 +10,20 @@ const UserSchema = new mongoose.Schema({
     lowercase: true,
   },
   password: { type: String, required: true },
-  stripeCustomerId: { type: String, default: null },
+
+  // Email Verification
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
+  emailVerificationToken: String,
+  emailVerificationTokenExpiry: Date,
 
   // Referral System
   referralCode: {
     type: String,
     unique: true,
+    sparse: true,
     default: null,
     index: true,
   },

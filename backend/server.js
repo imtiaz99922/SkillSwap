@@ -7,13 +7,21 @@ const socketIo = require("socket.io");
 require("dotenv").config();
 
 const app = express();
+const JWT_SECRET = process.env.JWT_SECRET || "skillswap_secret";
 const allowedOrigins = [
   process.env.CLIENT_ORIGIN || "http://localhost:5173",
+  "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:5175",
+  "http://localhost:5176",
+  "http://localhost:5177",
+  "http://localhost:5178",
   "http://127.0.0.1:5173",
   "http://127.0.0.1:5174",
   "http://127.0.0.1:5175",
+  "http://127.0.0.1:5176",
+  "http://127.0.0.1:5177",
+  "http://127.0.0.1:5178",
 ];
 
 // Enhanced CORS configuration with proper preflight handling
@@ -47,11 +55,13 @@ const challengeRoutes = require("./routes/challenges");
 const searchRoutes = require("./routes/search");
 const walletRoutes = require("./routes/wallet");
 const paymentRoutes = require("./routes/payment");
+const sslcommerzRoutes = require("./routes/sslcommerz");
 const availabilityRoutes = require("./routes/availability/availabilityRoutes");
 const chatRoutes = require("./routes/chat/chatRoutes");
 const notificationRoutes = require("./routes/notifications/notificationRoutes");
 const reviewRoutes = require("./routes/reviews/reviewRoutes");
 const recommendationRoutes = require("./routes/recommendations");
+const userRoutes = require("./routes/users");
 const mentorshipRoutes = require("./routes/mentorship");
 const referralRoutes = require("./routes/referral");
 const reportRoutes = require("./routes/reports");
@@ -60,6 +70,7 @@ const sessionRoutes = require("./routes/sessions");
 const pdfReportRoutes = require("./routes/pdf-reports");
 const courseRoutes = require("./routes/courses");
 const courseContentRoutes = require("./routes/course-content");
+const demoQuizRoutes = require("./routes/demo-quizzes");
 
 // Use routes
 app.use("/api/auth", authRoutes);
@@ -69,11 +80,13 @@ app.use("/api/challenges", challengeRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/wallet", walletRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/sslcommerz", sslcommerzRoutes);
 app.use("/api/availability", availabilityRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/recommendations", recommendationRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/mentorship", mentorshipRoutes);
 app.use("/api/referral", referralRoutes);
 app.use("/api/reports", reportRoutes);
@@ -82,6 +95,7 @@ app.use("/api/sessions", sessionRoutes);
 app.use("/api/pdf-reports", pdfReportRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/course-content", courseContentRoutes);
+app.use("/api/demo-quizzes", demoQuizRoutes);
 
 // Health check
 app.get("/health", (req, res) => {
@@ -154,11 +168,10 @@ connectDB()
       if (token) {
         try {
           const jwt = require("jsonwebtoken");
-          const decoded = jwt.verify(
-            token,
-            process.env.JWT_SECRET || "skillswap_secret",
-          );
+          const decoded = jwt.verify(token, JWT_SECRET);
           socket.userId = decoded.id;
+          socket.join(socket.userId.toString());
+          console.log(`User ${socket.userId} auto-joined room`);
         } catch (err) {
           socket.disconnect();
           return;
@@ -176,26 +189,88 @@ connectDB()
       socket.on("sendMessage", async (data) => {
         try {
           const ChatMessage = require("./models/ChatMessage");
+          const User = require("./models/User");
+          const {
+            createNotification,
+          } = require("./services/notificationService");
+
           const msg = new ChatMessage({
             senderId: data.senderId,
             receiverId: data.receiverId,
             message: data.message,
+            messageType: "private",
+            isRead: false,
             timestamp: new Date(),
           });
           await msg.save();
 
-          // Emit to receiver's room
-          io.to(data.receiverId.toString()).emit("receiveMessage", {
+          const sender = await User.findById(data.senderId).select("name");
+          const receiver = await User.findById(data.receiverId).select("name");
+          const senderName = sender?.name || "Unknown";
+          const receiverName = receiver?.name || "Unknown";
+
+          const messagePayload = {
             _id: msg._id,
             senderId: data.senderId,
+            senderName,
             receiverId: data.receiverId,
+            receiverName,
             message: data.message,
             timestamp: msg.timestamp,
             isRead: false,
-          });
+          };
+
+          // Emit to receiver's room
+          io.to(data.receiverId.toString()).emit(
+            "receiveMessage",
+            messagePayload,
+          );
+
+          // Emit conversation updates for receiver and sender
+          const updatedConversationForReceiver = {
+            userId: data.senderId,
+            userName: senderName,
+            lastMessage: data.message,
+            lastMessageTime: msg.timestamp,
+            unreadCount: 1,
+          };
+          const updatedConversationForSender = {
+            userId: data.receiverId,
+            userName: receiverName,
+            lastMessage: data.message,
+            lastMessageTime: msg.timestamp,
+            unreadCount: 0,
+          };
+
+          io.to(data.receiverId.toString()).emit(
+            "conversationUpdated",
+            updatedConversationForReceiver,
+          );
+          io.to(data.senderId.toString()).emit(
+            "conversationUpdated",
+            updatedConversationForSender,
+          );
+
+          // Notify receiver
+          await createNotification(
+            { app },
+            {
+              userId: data.receiverId,
+              title: `New message from ${senderName}`,
+              body: data.message,
+              type: "message",
+              data: {
+                senderId: data.senderId,
+                chatMessageId: msg._id,
+              },
+            },
+          );
 
           // Confirm to sender
-          socket.emit("messageSent", msg);
+          socket.emit("messageSent", {
+            ...messagePayload,
+            receiverName,
+          });
         } catch (err) {
           console.error("Message error:", err);
           socket.emit("messageError", { error: err.message });

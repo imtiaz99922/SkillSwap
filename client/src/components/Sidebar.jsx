@@ -37,7 +37,7 @@ export default function Sidebar({ theme, toggleTheme }) {
     { icon: FaHome, label: "Dashboard", path: "/dashboard" },
     { icon: FaUser, label: "My Skills", path: "/skills" },
     { icon: FaSearch, label: "Find Partners", path: "/search" },
-    { icon: FaBook, label: "Browse Courses", path: "/courses" },
+    { icon: FaBook, label: "My Courses", path: "/courses" },
     { icon: FaWallet, label: "Wallet", path: "/wallet" },
     { icon: FaBrain, label: "Quizzes", path: "/quizzes" },
     { icon: FaComments, label: "Messages", path: "/chat" },

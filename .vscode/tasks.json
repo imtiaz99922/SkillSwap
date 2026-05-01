@@ -61,6 +61,96 @@
       "label": "Run Both Servers",
       "dependsOn": ["Start Backend Server", "Start Frontend Server"],
       "problemMatcher": []
+    },
+    {
+      "label": "Temp Node Check",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "cd /d d:\\CSE 471 Project\\backend && node -e \"console.log('HELLO')\""
+      ],
+      "isBackground": false,
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Temp Node Check 2",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "cd /d d:\\CSE 471 Project\\backend && node -e \"console.log(\\\"HELLO\\\")\""
+      ],
+      "isBackground": false,
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Temp Node Check 3",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "Set-Location 'd:\\CSE 471 Project\\backend'; node -e \"console.log(\\\"HELLO\\\")\""
+      ],
+      "isBackground": false,
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Run Chat DB Check",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "cd /d \"d:\\CSE 471 Project\\backend\" && node check_chat.js"
+      ],
+      "isBackground": false,
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Run Chat DB Check 2",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "cd /d \"d:\\CSE 471 Project\\backend\" && node check_chat.js"
+      ],
+      "isBackground": false,
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Start Backend Direct",
+      "type": "shell",
+      "command": "cmd",
+      "args": ["/c", "cd /d \"d:\\CSE 471 Project\\backend\" && npm run dev"],
+      "isBackground": true
+    },
+    {
+      "label": "Start Backend v2",
+      "type": "shell",
+      "command": "cmd",
+      "args": ["/c", "cd /d \"d:\\CSE 471 Project\\backend\" && npm run dev"],
+      "isBackground": true
+    },
+    {
+      "label": "Test Backend Health",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "cd /d \"d:\\CSE 471 Project\\backend\" && curl -X GET http://localhost:5000/health"
+      ],
+      "isBackground": false
+    },
+    {
+      "label": "Install socket.io-client",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "cd /d \"d:\\CSE 471 Project\\backend\" && npm install socket.io-client --save"
+      ],
+      "isBackground": false
     }
   ]
 }
