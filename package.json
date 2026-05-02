@@ -4,8 +4,9 @@
   "description": "SkillSwap - A platform for skill sharing and learning",
   "scripts": {
     "build": "cd client && npm install --legacy-peer-deps && npm run build",
+    "start": "cd backend && npm start",
     "dev": "npm run dev --prefix client",
-    "install-all": "npm install && cd client && npm install && cd ../backend && npm install && cd ../api && npm install"
+    "install-all": "npm install && cd client && npm install --legacy-peer-deps && cd ../backend && npm install && cd ../api && npm install"
   },
   "engines": {
     "node": ">=18.0.0",
