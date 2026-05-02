@@ -49,53 +49,57 @@ app.use(express.json());
 
 // Import routes
 const authRoutes = require("./routes/auth");
-const skillRoutes = require("./routes/skills");
-const analyticsRoutes = require("./routes/analytics");
-const challengeRoutes = require("./routes/challenges");
-const searchRoutes = require("./routes/search");
-const walletRoutes = require("./routes/wallet");
-const paymentRoutes = require("./routes/payment");
-const sslcommerzRoutes = require("./routes/sslcommerz");
+// const analyticsRoutes = require("./routes/analytics");
 const availabilityRoutes = require("./routes/availability/availabilityRoutes");
-const chatRoutes = require("./routes/chat/chatRoutes");
-const notificationRoutes = require("./routes/notifications/notificationRoutes");
-const reviewRoutes = require("./routes/reviews/reviewRoutes");
-const recommendationRoutes = require("./routes/recommendations");
 const userRoutes = require("./routes/users");
-const mentorshipRoutes = require("./routes/mentorship");
-const referralRoutes = require("./routes/referral");
-const reportRoutes = require("./routes/reports");
-const leaderboardRoutes = require("./routes/leaderboard");
-const sessionRoutes = require("./routes/sessions");
-const pdfReportRoutes = require("./routes/pdf-reports");
-const courseRoutes = require("./routes/courses");
-const courseContentRoutes = require("./routes/course-content");
-const demoQuizRoutes = require("./routes/demo-quizzes");
+// const pdfReportRoutes = require("./routes/pdf-reports");
+
+// TODO: Add other routes when available
+// const skillRoutes = require("./routes/skills");
+// const challengeRoutes = require("./routes/challenges");
+// const searchRoutes = require("./routes/search");
+// const walletRoutes = require("./routes/wallet");
+// const paymentRoutes = require("./routes/payment");
+// const sslcommerzRoutes = require("./routes/sslcommerz");
+// const chatRoutes = require("./routes/chat/chatRoutes");
+// const notificationRoutes = require("./routes/notifications/notificationRoutes");
+// const reviewRoutes = require("./routes/reviews/reviewRoutes");
+// const recommendationRoutes = require("./routes/recommendations");
+// const mentorshipRoutes = require("./routes/mentorship");
+// const referralRoutes = require("./routes/referral");
+// const reportRoutes = require("./routes/reports");
+// const leaderboardRoutes = require("./routes/leaderboard");
+// const sessionRoutes = require("./routes/sessions");
+// const courseRoutes = require("./routes/courses");
+// const courseContentRoutes = require("./routes/course-content");
+// const demoQuizRoutes = require("./routes/demo-quizzes");
 
 // Use routes
 app.use("/api/auth", authRoutes);
-app.use("/api/skills", skillRoutes);
-app.use("/api/analytics", analyticsRoutes);
-app.use("/api/challenges", challengeRoutes);
-app.use("/api/search", searchRoutes);
-app.use("/api/wallet", walletRoutes);
-app.use("/api/payment", paymentRoutes);
-app.use("/api/sslcommerz", sslcommerzRoutes);
+// app.use("/api/analytics", analyticsRoutes);
 app.use("/api/availability", availabilityRoutes);
-app.use("/api/chat", chatRoutes);
-app.use("/api/notifications", notificationRoutes);
-app.use("/api/reviews", reviewRoutes);
-app.use("/api/recommendations", recommendationRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/mentorship", mentorshipRoutes);
-app.use("/api/referral", referralRoutes);
-app.use("/api/reports", reportRoutes);
-app.use("/api/leaderboard", leaderboardRoutes);
-app.use("/api/sessions", sessionRoutes);
-app.use("/api/pdf-reports", pdfReportRoutes);
-app.use("/api/courses", courseRoutes);
-app.use("/api/course-content", courseContentRoutes);
-app.use("/api/demo-quizzes", demoQuizRoutes);
+// app.use("/api/pdf-reports", pdfReportRoutes);
+
+// TODO: Add other routes when available
+// app.use("/api/skills", skillRoutes);
+// app.use("/api/challenges", challengeRoutes);
+// app.use("/api/search", searchRoutes);
+// app.use("/api/wallet", walletRoutes);
+// app.use("/api/payment", paymentRoutes);
+// app.use("/api/sslcommerz", sslcommerzRoutes);
+// app.use("/api/chat", chatRoutes);
+// app.use("/api/notifications", notificationRoutes);
+// app.use("/api/reviews", reviewRoutes);
+// app.use("/api/recommendations", recommendationRoutes);
+// app.use("/api/mentorship", mentorshipRoutes);
+// app.use("/api/referral", referralRoutes);
+// app.use("/api/reports", reportRoutes);
+// app.use("/api/leaderboard", leaderboardRoutes);
+// app.use("/api/sessions", sessionRoutes);
+// app.use("/api/courses", courseRoutes);
+// app.use("/api/course-content", courseContentRoutes);
+// app.use("/api/demo-quizzes", demoQuizRoutes);
 
 // Health check
 app.get("/health", (req, res) => {
