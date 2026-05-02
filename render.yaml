@@ -9,16 +9,16 @@ services:
     startCommand: npm start
     plan: free
     envVars:
-      - key: MONGO_URI
+      - key: MONGODB_URI
         sync: false
       - key: JWT_SECRET
         sync: false
       - key: CLIENT_ORIGIN
-        value: https://skillswap-frontend.onrender.com
+        sync: false
       - key: BACKEND_URL
-        value: https://skillswap-backend.onrender.com
+        sync: false
       - key: FRONTEND_URL
-        value: https://skillswap-frontend.onrender.com
+        sync: false
 
   - type: static
     name: skillswap-frontend
@@ -31,4 +31,4 @@ services:
     plan: free
     envVars:
       - key: VITE_API_BASE
-        value: https://skillswap-backend.onrender.com/api
+        sync: false

@@ -49,9 +49,9 @@ app.use(express.json());
 const authMiddleware = require("../backend/middleware/auth");
 
 // MongoDB Connection
-const mongoUri = process.env.MONGODB_URI;
+const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI;
 if (!mongoUri) {
-  console.error("MONGODB_URI not set in environment variables");
+  console.error("MONGODB_URI or MONGO_URI not set in environment variables");
   process.exit(1);
 }
 
