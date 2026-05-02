@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { notificationApi } from "../../notifications/services/notificationApi";
-import NotificationList from "../../notifications/components/NotificationList";
+import { notificationApi } from "../../../Zimam/notifications/services/notificationApi";
+import NotificationList from "../../../Zimam/notifications/components/NotificationList";
 import { FaSpinner } from "react-icons/fa";
 
 export default function RecommendationsPage() {

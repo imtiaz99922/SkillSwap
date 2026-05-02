@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Star, Users, Clock } from "lucide-react";
-import { courseApi } from "../features/courses/services/courseApi";
+import { courseApi } from "../courses/services/courseApi";
 import "./CoursesPage.css";
 
 const CoursesPage = () => {

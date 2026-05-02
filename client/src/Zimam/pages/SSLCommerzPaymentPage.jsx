@@ -7,8 +7,8 @@ import {
   FaCreditCard,
   FaTimes,
 } from "react-icons/fa";
-import sslcommerzApi from "../services/sslcommerzApi";
-import api from "../services/api";
+import sslcommerzApi from "../../services/sslcommerzApi";
+import api from "../../services/api";
 import "./SSLCommerzPaymentPage.css";
 
 const SSLCommerzPaymentPage = () => {

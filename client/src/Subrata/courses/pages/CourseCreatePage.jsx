@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { courseApi } from "../services/courseApi";
-import { demoQuizApi } from "../../quiz/services/demoQuizApi";
+import { demoQuizApi } from "../../../Imtiaz/quiz/services/demoQuizApi";
 import { skillsApi } from "../../skills/services/skillsApi";
 import { AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
 import "../../../styles/ModernDesign.css";

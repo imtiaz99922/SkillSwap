@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { quizApi } from "../services/quizApi";
-import { searchApi } from "../../search/services/searchApi";
+import { searchApi } from "../../../Adib/search/services/searchApi";
 import "../../../styles/ModernDesign.css";
 
 export default function QuizCreatePage() {

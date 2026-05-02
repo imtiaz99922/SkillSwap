@@ -1,0 +1,1 @@
+mongodb+srv://mdimtiazahmed_db_user:7vsmygdzSQAgx9H2@cluster0.etx6e0r.mongodb.net/skillswap?retryWrites=true&w=majority

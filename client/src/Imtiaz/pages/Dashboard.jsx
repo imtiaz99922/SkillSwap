@@ -1,13 +1,13 @@
 ﻿import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaChartLine, FaShieldAlt, FaTrophy, FaRocket } from "react-icons/fa";
-import api from "../services/api";
-import HeroSection from "../components/HeroSection";
-import DataCard from "../components/DataCard";
-import FuturisticTable from "../components/FuturisticTable";
-import FuturisticModal from "../components/FuturisticModal";
-import LiveStatsWidget from "../components/LiveStatsWidget";
-import "../components/FuturisticStyles.css";
+import api from "../../services/api";
+import HeroSection from "../../components/HeroSection";
+import DataCard from "../../components/DataCard";
+import FuturisticTable from "../../components/FuturisticTable";
+import FuturisticModal from "../../components/FuturisticModal";
+import LiveStatsWidget from "../../components/LiveStatsWidget";
+import "../../components/FuturisticStyles.css";
 import "./Dashboard.css";
 
 export default function Dashboard() {

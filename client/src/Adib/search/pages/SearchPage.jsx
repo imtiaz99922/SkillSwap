@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchSkillCard from "../components/SearchSkillCard.jsx";
-import BookSlotModal from "../../availability/components/BookSlotModal";
+import BookSlotModal from "../../../Imtiaz/availability/components/BookSlotModal";
 import { searchApi } from "../services/searchApi";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/ModernDesign.css";

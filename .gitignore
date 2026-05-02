@@ -16,3 +16,4 @@ dist/
 out/
 build/
 .turbo/
+.vercel
