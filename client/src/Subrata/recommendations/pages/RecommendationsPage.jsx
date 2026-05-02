@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE } from "../../../services/api";
 import { useLocation, useNavigate } from "react-router-dom";
 import { notificationApi } from "../../../Zimam/notifications/services/notificationApi";
 import NotificationList from "../../../Zimam/notifications/components/NotificationList";
@@ -55,10 +56,10 @@ export default function RecommendationsPage() {
     try {
       const token = localStorage.getItem("token");
       const [courseResponse, usersResponse] = await Promise.all([
-        axios.get(`http://localhost:5000/api/courses/${courseId}`, {
+        axios.get(`${API_BASE}/courses/${courseId}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("http://localhost:5000/api/users", {
+        axios.get(`${API_BASE}/users`, {
           headers: { Authorization: `Bearer ${token}` },
           params: { limit: 200 },
         }),
@@ -109,7 +110,7 @@ export default function RecommendationsPage() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/notifications/send",
+        `${API_BASE}/notifications/send`,
         {
           userId: user._id,
           title: `Course recommendation: ${course.title}`,

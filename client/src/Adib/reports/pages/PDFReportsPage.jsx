@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../../../services/api";
 import { FaDownload, FaFile, FaSpinner } from "react-icons/fa";
 
 export default function PDFReportsPage() {
@@ -16,7 +17,7 @@ export default function PDFReportsPage() {
         responseType: "blob",
       };
 
-      let url = "http://localhost:5000/api/pdf-reports";
+      let url = `${API_BASE}/pdf-reports`;
       let filename = "report.pdf";
 
       if (type === "transactions") {

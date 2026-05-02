@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { removeToken, isAuthenticated } from "../utils/auth";
 import { getSocket, initializeSocket } from "../services/socketService";
+import { API_BASE } from "../services/api";
 import {
   FaBars,
   FaTimes,
@@ -82,7 +83,7 @@ export default function Navbar() {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await fetch("/api/notifications/unread-count", {
+      const response = await fetch(`${API_BASE}/notifications/unread-count`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

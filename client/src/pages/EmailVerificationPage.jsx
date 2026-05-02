@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../services/api";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import AuthLayout from "../components/AuthLayout";
 import AuthInput from "../components/AuthInput";
@@ -25,10 +26,9 @@ export default function EmailVerificationPage() {
       }
 
       try {
-        const response = await axios.post(
-          "http://localhost:5000/api/auth/verify-email",
-          { token },
-        );
+        const response = await axios.post(`${API_BASE}/auth/verify-email`, {
+          token,
+        });
         setStatus("success");
         setMessage(response.data.msg);
         setTimeout(() => navigate("/login"), 3000);
@@ -50,7 +50,7 @@ export default function EmailVerificationPage() {
 
     setResendLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/resend-verification", {
+      await axios.post(`${API_BASE}/auth/resend-verification`, {
         email,
       });
       setMessage("Verification email resent! Check your inbox.");

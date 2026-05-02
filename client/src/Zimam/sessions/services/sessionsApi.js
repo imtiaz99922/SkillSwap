@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const API_BASE = "http://localhost:5000/api/sessions";
+import { API_BASE } from "../../../services/api";
 
 export const sessionsApi = {
   createSession: async (data) => {

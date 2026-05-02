@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE } from "../services/api";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   ChevronDown,
@@ -34,7 +35,7 @@ const CourseMaterialsPage = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000/api/courses/${courseId}/content`,
+        `${API_BASE}/courses/${courseId}/content`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
@@ -94,7 +95,7 @@ const CourseMaterialsPage = () => {
   const handleMarkViewed = async (contentId) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/course-content/${contentId}/viewed`,
+        `${API_BASE}/course-content/${contentId}/viewed`,
         {},
         { headers: { Authorization: `Bearer ${token}` } },
       );

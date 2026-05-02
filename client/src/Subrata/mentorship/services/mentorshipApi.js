@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const API_BASE = "http://localhost:5000/api/mentorship";
+import { API_BASE } from "../../../services/api";
 
 export const mentorshipApi = {
   getMentorships: async () => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE } from "../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
 import { AlertCircle, CheckCircle, XCircle, Clock } from "lucide-react";
 import "./DemoQuizPage.css";
@@ -45,7 +46,7 @@ const DemoQuizPage = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000/api/course-content/${courseId}/demo-quiz`,
+        `${API_BASE}/course-content/${courseId}/demo-quiz`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
@@ -101,7 +102,7 @@ const DemoQuizPage = () => {
       }));
 
       const response = await axios.post(
-        `http://localhost:5000/api/course-content/${courseId}/demo-quiz/attempt`,
+        `${API_BASE}/course-content/${courseId}/demo-quiz/attempt`,
         {
           answers,
           timeSpent: quiz?.timeLimit
