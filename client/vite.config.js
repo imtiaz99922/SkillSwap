@@ -8,4 +8,10 @@ export default defineConfig({
     host: "0.0.0.0",
     hmr: false,
   },
+  optimizeDeps: {
+    include: ["@vercel/speed-insights"],
+  },
+  resolve: {
+    dedupe: ["react", "react-dom"],
+  },
 });

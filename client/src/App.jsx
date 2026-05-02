@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
@@ -100,6 +101,7 @@ export default function App() {
         className={`app-main ${showSidebar ? "with-sidebar" : ""}`}
         style={{ paddingTop: showNavbar ? "96px" : "0" }}
       >
+        <SpeedInsights />
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/login" element={<Login />} />
