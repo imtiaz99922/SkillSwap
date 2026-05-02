@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "SkillSwap - A platform for skill sharing and learning",
   "scripts": {
-    "build": "cd client && npm install && npm rebuild && npm run build",
+    "build": "cd client && npm install --legacy-peer-deps && npm run build",
     "dev": "npm run dev --prefix client",
     "install-all": "npm install && cd client && npm install && cd ../backend && npm install && cd ../api && npm install"
   },
