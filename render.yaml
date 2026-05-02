@@ -5,7 +5,7 @@ services:
     branch: main
     root: backend
     nodeVersion: 18
-    buildCommand: npm install
+    buildCommand: npm install --no-workspaces
     startCommand: npm start
     plan: free
     envVars:
@@ -26,7 +26,7 @@ services:
     branch: main
     root: client
     nodeVersion: 18
-    buildCommand: npm install --legacy-peer-deps && npm run build
+    buildCommand: npm ci --legacy-peer-deps --no-workspaces && npm run build
     publishPath: dist
     plan: free
     envVars:
